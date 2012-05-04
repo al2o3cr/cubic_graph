@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
+    <script type="text/javascript" src="./underscore.min.js"></script>
+    <script type="text/javascript" src="./raphael-min.js"></script>
+    <script type="text/javascript" src="./g.raphael-min.js"></script>
+    <script type="text/javascript" src="./g.line-min.js"></script>
+    <script type="text/javascript" src="./app.js"></script>
+    <style type="text/css">
+      #holder {
+        padding-left: 10px
+        width: 900px;
+        height: 600px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="holder"></div>
+
+    <div style="float: left">
+      <h1>Points</h1>
+      <table width="200px">
+        <thead>
+          <tr>
+            <th align="left">X</th>
+            <th align="left">Y</th>
+          </tr>
+        </thead>
+        <tbody id="values">
+          <tr>
+            <td><input type="text" class="xin"/></td>
+            <td><input type="text" class="yin"/></td>
+          </tr>
+          <tr>
+            <td><input type="text" class="xin"/></td>
+            <td><input type="text" class="yin"/></td>
+          </tr>
+          <tr>
+            <td><input type="text" class="xin"/></td>
+            <td><input type="text" class="yin"/></td>
+          </tr>
+        </tbody>
+        <tbody>
+          <tr>
+            <td colspan="2">
+              <button id="moar">MOAR</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div style="float: left">
+      <h1>Graph</h1>
+      <table width="200px">
+        <thead>
+          <tr>
+            <th></th>
+            <th align="left">X</th>
+            <th align="left">Y</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th>min</th>
+            <td><input type="text" id="xmin"/></td>
+            <td><input type="text" id="ymin"/></td>
+          </tr>
+          <tr>
+            <th>max</th>
+            <td><input type="text" id="xmax"/></td>
+            <td><input type="text" id="ymax"/></td>
+          </tr>
+        </tbody>
+      </table>
+
+    </div>
+  </body>
+</html>
