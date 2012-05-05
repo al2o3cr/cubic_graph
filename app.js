@@ -33,10 +33,9 @@ window.drawGraph = function(r) {
   r.linechart(20, 0, 900, 550, [x, points[0]], [y, points[1]],
               {
                 axis: '0 0 1 1', axisxstep: niceSteps(x), axisystep: niceSteps(y),
-                colors: ['white', 'black'],
-                symbol: ['circle', '']
+                symbol: ['circle', ''],
+                nostroke: [true, false]
               });
-//  r.linechart(20, 0, 900, 550, x, y, {symbol: 'circle', nostroke: true});
   $('#results').val(coefs.toString());
 };
 
