@@ -1,5 +1,7 @@
 $(function () {
   window.r = Raphael('holder');
+  window.rowTemplate = _.template("<tr><td><input type='input' class='xin' value='<%= x %>'/></td><td><input type='input' class='yin' value='<%= y %>'/></td><td><a href='#' class='remove'>X</a></td></tr>");
+
   $('#values').on('change', 'input', function() {
     redraw();
   });
@@ -7,8 +9,7 @@ $(function () {
     redraw();
   });
   $('button#moar').click(function() {
-    var template = _.template("<tr><td><input type='input' class='xin'/></td><td><input type='input' class='yin'/></td><td><a href='#' class='remove'>X</a></td></tr>");
-    $('#values').append(template());
+    addRow('','');
   });
   $('#values').on('click', 'a.remove', function(e) {
     e.preventDefault();
@@ -22,6 +23,10 @@ window.redraw = function() {
   r.clear();
   var points = loadValues();
   drawGraph(r, points[0], points[1]);
+}
+
+window.addRow = function(x, y) {
+  $('#values').append(rowTemplate({x:x, y:y}));
 }
 
 window.loadValues = function() {
@@ -64,14 +69,18 @@ window.drawGraph = function(r, x, y) {
 
   var coefs = spline_coef(x, y);
   var points = spline_plot(x, y, coefs);
-  r.linechart(20, 0, 900, 550, [x, points[0]], [y, points[1]],
-              {
-                axis: '0 0 1 1', axisxstep: niceSteps(x), axisystep: niceSteps(y),
-                symbol: ['circle', ''],
-                nostroke: [true, false],
-                xmin: numberIn('#xmin')+1e-10, xmax: numberIn('#xmax')+1e-10,
-                ymin: numberIn('#ymin')+1e-10, ymax: numberIn('#ymax')+1e-10
-              });
+  window.chart = r.linechart(20, 0, 900, 550, [x, points[0]], [y, points[1]],
+                              {
+                                axis: '0 0 1 1', axisxstep: niceSteps(x), axisystep: niceSteps(y),
+                                symbol: ['circle', ''],
+                                nostroke: [true, false],
+                                xmin: numberIn('#xmin')+1e-10, xmax: numberIn('#xmax')+1e-10,
+                                ymin: numberIn('#ymin')+1e-10, ymax: numberIn('#ymax')+1e-10
+                              }).clickColumn(function(ev) {
+                                var pt = chart.screenToData(ev.offsetX, ev.offsetY);
+                                addRow(pt[0], pt[1]);
+                                redraw();
+                              });
   $('#results').val(coefs.toString());
 };
 
