@@ -82,7 +82,8 @@
 
         for (i = 0, ii = valuesy.length; i < ii; i++) {
             if (opts.shade) {
-                shades.push(paper.path().attr({ stroke: "none", fill: colors[i], opacity: opts.nostroke ? 1 : .3 }));
+                var nostroke = Raphael.is(nostroke, "array") ? opts.nostroke[i] : opts.nostroke;
+                shades.push(paper.path().attr({ stroke: "none", fill: colors[i], opacity: nostroke ? 1 : .3 }));
             }
 
             if (valuesy[i].length > width - 2 * gutter) {
@@ -121,7 +122,9 @@
             line;
 
         for (i = 0, ii = valuesy.length; i < ii; i++) {
-            if (!opts.nostroke) {
+            var nostroke = Raphael.is(nostroke, "array") ? opts.nostroke[i] : opts.nostroke;
+
+            if (!nostroke) {
                 lines.push(line = paper.path().attr({
                     stroke: colors[i],
                     "stroke-width": opts.width || 2,
@@ -171,7 +174,7 @@
                 shades[i].attr({ path: path.concat(["L", X, y + height - gutter, "L",  x + gutter + ((valuesx[i] || valuesx[0])[0] - minx) * kx, y + height - gutter, "z"]).join(",") });
             }
 
-            !opts.nostroke && line.attr({ path: path.join(",") });
+            !nostroke && line.attr({ path: path.join(",") });
         }
 
         function createColumns(f) {
