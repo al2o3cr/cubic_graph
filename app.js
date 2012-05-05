@@ -20,7 +20,15 @@ window.drawGraph = function(r) {
   }
   x = _.first(x, length);
   y = _.first(y, length);
-  r.linechart(20, 0, 900, 550, x, y, {axis: '0 0 1 1'});
+
+  /* normal order the lists */
+  points = _.zip(x, y);
+  points = _.sortBy(points, xCoord);
+
+  x = _.map(points, xCoord);
+  y = _.map(points, yCoord);
+
+  r.linechart(20, 0, 900, 550, x, y, {axis: '0 0 1 1', axisxstep: niceSteps(x), axisystep: niceSteps(y)});
   r.linechart(20, 0, 900, 550, x, y, {symbol: 'circle', nostroke: true});
 /*  var x = [], y = [], y2 = [], y3 = [];
 
@@ -68,4 +76,21 @@ window.getYrange = function() {
 
 window.numberIn = function(el) {
   return parseFloat($(el).val());
+}
+
+window.nearestPower = function(x) {
+  return Math.pow(10, Math.floor(Math.log(x)/Math.LN10));
+}
+
+window.xCoord = function(p) { return p[0]; }
+window.yCoord = function(p) { return p[1]; }
+
+window.niceSteps = function(a) {
+  // find a sensible step count, based on the given values
+  var min = _.min(a), max = _.max(a),
+      range = max - min,
+      nearest = nearestPower(range),
+      steps = Math.floor(range/nearest);
+
+  return (steps <= 4 ? Math.floor(5*range/nearest) : steps);
 }
