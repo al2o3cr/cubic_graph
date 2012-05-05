@@ -1,32 +1,63 @@
 $(function () {
-  var r = Raphael('holder');
+  window.r = Raphael('holder');
   $('#values').on('change', 'input', function() {
-    r.clear();
-    drawGraph(r);
+    redraw();
   });
   $('button#moar').click(function() {
-    var template = _.template("<tr><td><input type='input' class='xin'/></td><td><input type='input' class='yin'/></td></tr>");
+    var template = _.template("<tr><td><input type='input' class='xin'/></td><td><input type='input' class='yin'/></td><td><a href='#' class='remove'>X</a></td></tr>");
     $('#values').append(template());
+  });
+  $('#values').on('click', 'a.remove', function(e) {
+    e.preventDefault();
+    $(e.target).parents('tr').remove();
+    redraw();
+    return false;
   });
 });
 
-window.drawGraph = function(r) {
-  var txtattr = { font: "12px sans-serif" };
+window.redraw = function() {
+  r.clear();
+  var points = loadValues();
+  drawGraph(r, points[0], points[1]);
+}
 
+window.loadValues = function() {
   var x = getX(), y = getY(), length = Math.min(x.length, y.length);
 
-  if (length <= 2) {
-    return;
-  }
   x = _.first(x, length);
   y = _.first(y, length);
 
   /* normal order the lists */
   points = _.zip(x, y);
   points = _.sortBy(points, xCoord);
+  // the spline will fail disastrously if a x value is duplicated
+  // remove offending points
+  points = _.uniq(points, true, xCoord);
 
   x = _.map(points, xCoord);
   y = _.map(points, yCoord);
+
+  pushValues('input.xin', x)
+  pushValues('input.yin', y);
+  return [x, y];
+}
+
+window.pushValues = function(el, x) {
+  // push the values back into the table in sorted order
+  $(el).each(function(index, e) {
+    var newval = x[index];
+    if (newval != undefined) {
+      $(e).val(newval);
+    }
+  });
+}
+
+window.drawGraph = function(r, x, y) {
+  var txtattr = { font: "12px sans-serif" };
+
+  if (x.length <= 2) {
+    return;
+  }
 
   var coefs = spline_coef(x, y);
   var points = spline_plot(x, y, coefs);
