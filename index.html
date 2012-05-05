@@ -16,6 +16,7 @@
     </style>
   </head>
   <body>
+    <h1>Natural cubic spline</h1>
     <div id="holder"></div>
 
     <div style="float: left">
@@ -40,6 +41,10 @@
             <td><input type="text" class="xin"/></td>
             <td><input type="text" class="yin"/></td>
           </tr>
+          <tr>
+            <td><input type="text" class="xin"/></td>
+            <td><input type="text" class="yin"/></td>
+          </tr>
         </tbody>
         <tbody>
           <tr>
@@ -51,29 +56,9 @@
       </table>
     </div>
     <div style="float: left">
-      <h1>Graph</h1>
-      <table width="200px">
-        <thead>
-          <tr>
-            <th></th>
-            <th align="left">X</th>
-            <th align="left">Y</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <th>min</th>
-            <td><input type="text" id="xmin"/></td>
-            <td><input type="text" id="ymin"/></td>
-          </tr>
-          <tr>
-            <th>max</th>
-            <td><input type="text" id="xmax"/></td>
-            <td><input type="text" id="ymax"/></td>
-          </tr>
-        </tbody>
-      </table>
-
+      <h1>Results</h1>
+      <textarea id="results">
+      </textarea>
     </div>
   </body>
 </html>
