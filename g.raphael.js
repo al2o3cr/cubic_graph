@@ -847,7 +847,6 @@ Raphael.g = {
                 } else {
                     prev = bb.x + bb.width;
                 }
-                console.log(label, d);
                 label += d;
                 X += dx;
             }
