@@ -316,6 +316,26 @@
             return this;
         };
 
+        chart.screenToData = function(screen_x, screen_y) {
+          // translate screen coordinates to data coordinates
+          var xaxis, yaxis;
+          for(var i=0; i< this.axis.length; i++) {
+            var a = axis[i];
+            var direction = a.params[6];
+            if (direction == 0) {
+              xaxis = a;
+            } else if (direction == 1) {
+              yaxis = a;
+            }
+          }
+          var x_range = xaxis.params[4] - xaxis.params[3], xmin = xaxis.params[3];
+          var y_range = yaxis.params[4] - yaxis.params[3], ymin = yaxis.params[3];
+          screen_x -= xaxis.params[0];
+          screen_y = yaxis.params[1] - screen_y;
+          var x_fraction = screen_x / xaxis.params[2], y_fraction = screen_y / yaxis.params[2];
+          return [xmin + x_range*x_fraction, ymin + y_range*y_fraction];
+        };
+
         return chart;
     };
     
