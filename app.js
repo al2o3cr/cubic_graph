@@ -3,6 +3,9 @@ $(function () {
   $('#values').on('change', 'input', function() {
     redraw();
   });
+  $('#ranges').on('change', 'input', function() {
+    redraw();
+  });
   $('button#moar').click(function() {
     var template = _.template("<tr><td><input type='input' class='xin'/></td><td><input type='input' class='yin'/></td><td><a href='#' class='remove'>X</a></td></tr>");
     $('#values').append(template());
@@ -65,7 +68,9 @@ window.drawGraph = function(r, x, y) {
               {
                 axis: '0 0 1 1', axisxstep: niceSteps(x), axisystep: niceSteps(y),
                 symbol: ['circle', ''],
-                nostroke: [true, false]
+                nostroke: [true, false],
+                xmin: numberIn('#xmin')+1e-10, xmax: numberIn('#xmax')+1e-10,
+                ymin: numberIn('#ymin')+1e-10, ymax: numberIn('#ymax')+1e-10
               });
   $('#results').val(coefs.toString());
 };
