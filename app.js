@@ -83,7 +83,7 @@ window.drawGraph = function(r, x, y) {
                                 addRow(pt[0], pt[1]);
                                 redraw();
                               });
-  $('#results').val(dataTemplate({data: expanded_coefs}));
+  $('#results').val(dataTemplate({data: expanded_coefs}).replace(/,\s*]/g,']'));
 };
 
 window.getX = function() {
