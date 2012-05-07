@@ -13,7 +13,25 @@
         width: 900px;
         height: 600px;
       }
+      #results {
+        width: 300px;
+        height: 200px;
+      }
     </style>
+    <script type="text/template" id="rowTemplate">
+      <tr>
+        <td><input type='input' class='xin' value='<%= x %>'/></td>
+        <td><input type='input' class='yin' value='<%= y %>'/></td>
+        <td><a href='#' class='remove'>X</a></td>
+      </tr>
+    </script>
+    <script type="text/template" id="dataTemplate">
+[
+<% _.each(data, function(row) { %>
+  [<%= row[0] %>, [<% _.each(row[1], function(v) { %><%= v %>, <% }) %>]],
+<% }) %>
+]
+    </script>
   </head>
   <body>
     <h1>Natural cubic spline</h1>
@@ -87,6 +105,10 @@
     </div>
     <div style="float: left">
       <h1>Results</h1>
+      <p>
+        See the spline_interp function in app.js for sample code to use
+        this array.
+      </p>
       <textarea id="results">
       </textarea>
     </div>
