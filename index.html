@@ -25,12 +25,28 @@
         <td><a href='#' class='remove'>X</a></td>
       </tr>
     </script>
-    <script type="text/template" id="dataTemplate">
+
+    <script type="text/template" class="dataTemplate" data-language="javascript">
 [
 <% _.each(data, function(row) { %>
   [<%= row[0] %>, [<% _.each(row[1], function(v) { %><%= v %>, <% }) %>]],
 <% }) %>
 ]
+    </script>
+
+    <script type="text/template" class="dataTemplate" data-language="objectivec">
+<% var index = 0; %>
+<% var coefficients = _.map(_.range(data.length), function(num) { return "coef" + num }); %>
+<% _.each(data, function(row) { %>
+<%= coefficients[index] + " = " + "[NSArray initWithObjects:\n" +
+  "  [NSNumber " + row[0] + " floatValue],\n" +
+  "  [NSArray initWithObjects:\n" +
+  _.map(row[1], function(num) {
+    return "    [NSNumber " + num + " floatValue]";
+  }).join(",\n").concat(", nil], nil];") %>
+<% index++; %>
+<% }) %>
+<%= "[[NSArray alloc] initWithObjects:" + coefficients.join(", ").concat(", nil];") %>
     </script>
   </head>
   <body>
@@ -105,6 +121,10 @@
     </div>
     <div style="float: left">
       <h1>Results</h1>
+      <select id="language">
+        <option value="javascript" selected="selected">JavaScript</option>
+        <option value="objectivec">Objective-C</option>
+      </select>
       <p>
         See the spline_interp function in app.js for sample code to use
         this array.

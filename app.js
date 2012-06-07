@@ -1,7 +1,7 @@
 $(function () {
   window.r = Raphael('holder');
   window.rowTemplate = _.template($('script#rowTemplate').html());
-  window.dataTemplate = _.template($('script#dataTemplate').html());
+  window.dataTemplate = _.template($("script.dataTemplate[data-language='javascript']").html());
 
   $('#values').on('change', 'input', function() {
     redraw();
@@ -11,6 +11,11 @@ $(function () {
   });
   $('button#moar').click(function() {
     addRow('','');
+  });
+  $('#language').change(function() {
+    var language = $(this).find("option:selected").val();
+    window.dataTemplate = _.template($("script.dataTemplate[data-language='"+language+"']").html());
+    redraw();
   });
   $('#values').on('click', 'a.remove', function(e) {
     e.preventDefault();
