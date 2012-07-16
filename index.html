@@ -38,15 +38,15 @@
 <% var index = 0; %>
 <% var coefficients = _.map(_.range(data.length), function(num) { return "coef" + num }); %>
 <% _.each(data, function(row) { %>
-<%= coefficients[index] + " = " + "[NSArray initWithObjects:\n" +
-  "  [NSNumber " + row[0] + " floatValue],\n" +
-  "  [NSArray initWithObjects:\n" +
+<%= "NSArray *" + coefficients[index] + " = " + "[NSArray arrayWithObjects:\n" +
+  "  [NSNumber numberWithFloat:" + row[0] + "],\n" +
+  "  [NSArray arrayWithObjects:\n" +
   _.map(row[1], function(num) {
-    return "    [NSNumber " + num + " floatValue]";
+    return "    [NSNumber numberWithFloat:" + num + "]";
   }).join(",\n").concat(", nil], nil];") %>
 <% index++; %>
 <% }) %>
-<%= "[[NSArray alloc] initWithObjects:" + coefficients.join(", ").concat(", nil];") %>
+<%= "NSArray *coefficients = [NSArray arrayWithObjects:" + coefficients.join(", ").concat(", nil];") %>
     </script>
   </head>
   <body>
